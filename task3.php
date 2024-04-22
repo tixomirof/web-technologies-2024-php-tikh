@@ -1,19 +1,63 @@
 <?php
-    echo "<h3>3. Реализовать основные 4 арифметические операции в виде функций с двумя параметрами. Обязательно использовать оператор return.</h3>";
+    echo "<h3>3. Объявить массив, индексами которого являются буквы русского языка, 
+    а значениями – соответствующие латинские буквосочетания 
+    (‘а’=> ’a’, ‘б’ => ‘b’, ‘в’ => ‘v’, ‘г’ => ‘g’, …, ‘э’ => ‘e’, ‘ю’ => ‘yu’, ‘я’ => ‘ya’).
+    <br><br>Написать функцию транслитерации строк.
+    </h3>";
 
-    function sum($val1, $val2) { return $val1 + $val2; }
-    function subtract($val1, $val2) { return $val1 - $val2; }
-    function multiply($val1, $val2) { return $val1 * $val2; }
-    function divide($val1, $val2) {
-        return $val2 == 0 ? "Ошибка деления на ноль" : $val1 / $val2;
+    function translit($str) {
+        $kv_table = [
+            'а' => 'a',
+            'б' => 'b',
+            'в' => 'v',
+            'г' => 'g',
+            'д' => 'd',
+            'е' => 'e',
+            'ё' => 'yo',
+            'ж' => 'zh',
+            'з' => 'z',
+            'и' => 'i',
+            'й' => 'y',
+            'к' => 'k',
+            'л' => 'l',
+            'м' => 'm',
+            'н' => 'n',
+            'о' => 'o',
+            'п' => 'p',
+            'р' => 'r',
+            'с' => 's',
+            'т' => 't',
+            'у' => 'u',
+            'ф' => 'f',
+            'х' => 'h',
+            'ц' => 'c',
+            'ч' => 'ch',
+            'ш' => 'sh',
+            'щ' => 'sh\'',
+            'ъ' => 'i',
+            'ы' => 'i',
+            'ь' => '\'',
+            'э' => 'e',
+            'ю' => 'yu',
+            'я' => 'ya'
+        ];
+        $result = "";
+        foreach (mb_str_split($str) as $char) {
+            $c = mb_strtolower($char);
+            if (array_key_exists($c, $kv_table))
+                $result .= $c != $char ? mb_strtoupper($kv_table[$c]) : $kv_table[$c];
+            else $result .= $char;
+        }
+        return $result;
     }
 
-    echo "<p>";
-    echo sum(2, 3) . " ";
-    echo subtract(2, 3) . " ";
-    echo multiply(subtract(9, 6), sum(1, 1)) . " ";
-    echo divide(515, 95) . " ";
-    echo divide(515, multiply(sum(sum(4, 2), subtract(multiply(1, 6), 4), divide(5, 4)), sum(subtract(subtract(1, 5), multiply(4, 4), 1), multiply(3, -11)))) . " ";
-    echo divide(515, 0) . " ";
-    echo "</p>";
+    function echo_translit($str) {
+        $result = translit($str);
+        echo "<p>$result</p>";
+    }
+
+    echo_translit("Сладкие и свежие французские булочки.");
+    echo_translit("Скоро рассвет!");
+    echo_translit("300 спартанцев");
+    echo_translit("МЯЯЯЯЯЯЯЯЯЯЯЯЯУ");
 ?>

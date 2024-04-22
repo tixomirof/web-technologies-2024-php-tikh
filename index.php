@@ -10,9 +10,9 @@
 </style>
 <body>
     <?php
-    for ($i = 1; $i <= 6; $i++) {
-        echo "<div class='separator'>Task $i</div>";
-        require_once 'task' . $i . '.php';
+    for ($iter = 1; $iter <= 6; $iter++) {
+        echo "<div class='separator'>Task $iter</div>";
+        require_once 'task' . $iter . '.php';
     }?>
 </body>
 </html>
