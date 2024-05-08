@@ -11,8 +11,8 @@ function initCreation() {
 
     echo '<div class="list-items" id="list-items-mysql">
     <div class="list-item list-item_open" data-parent>';
-    createFolder($root[0]["catalogName"]);
-    createList(intval($root[0]["catalogID"]));
+    createFolder($root["catalogName"]);
+    createList(intval($root["catalogID"]));
     echo '</div></div>';
 }
 
