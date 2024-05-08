@@ -72,11 +72,13 @@ function init() {
     }
 
 
-    const items = new ListItems(document.getElementById('list-items'), data)
+    const items = new ListItems(document.getElementById('list-items'), data);
+    const items_mysql = new ListItems(document.getElementById('list-items-mysql'), data);
 
 
   /*  items.render()*/
-    items.init()
+    items.init();
+    items_mysql.init();
 
     /*console.log(items.renderTest(data));*/
 

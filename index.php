@@ -8,6 +8,13 @@
 </head>
 <body>
     <?php
+    echo "<h1>MYSQL VER</h1>";
+
+    include './catalog_builder.php';
+    initCreation();
+
+    echo "<h1>HARDCODE VER</h1>";
+
     $indexhtml = file_get_contents("./lesson9/index.html");
     $body = mb_substr($indexhtml, strpos($indexhtml, "<body>"));
 
