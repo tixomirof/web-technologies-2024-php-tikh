@@ -23,6 +23,11 @@
   width: 2em;
 }
 
+.list-item__file {
+  width: 2em;
+  margin-left: 15px;
+}
+
 .list-item_open > .list-item__items {
   display: block;
 }
