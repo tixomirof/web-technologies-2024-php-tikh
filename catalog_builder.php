@@ -3,21 +3,22 @@
 include './mysql.php';
 
 function initCreation() {
-    $root = iterator_to_array(doSQLQuery("SELECT * FROM files WHERE files.parentID = 0 LIMIT 1"), false);
-    if (count($root) <= 0) {
+    $all = iterator_to_array(doSQLQuery("SELECT * FROM files"), false);
+    if (count($all) <= 0) {
         echo "Ошибка подключения к базе данных.";
         return;
     }
+    $root = findChildren(0, $all);
 
     echo '<div class="list-items" id="list-items-mysql">
     <div class="list-item list-item_open" data-parent>';
-    createFolder($root["catalogName"]);
-    createList(intval($root["catalogID"]));
+    createFolder($root[0]["catalogName"]);
+    createList(intval($root[0]["catalogID"]), $all);
     echo '</div></div>';
 }
 
-function createList($id) {
-    $children = iterator_to_array(doSQLQuery("SELECT * FROM files WHERE files.parentID = $id"), false);
+function createList($id, $all) {
+    $children = findChildren($id, $all);
     if (!is_null($children) && count($children) > 0) {
         echo '<div class="list-item__items">
         <div class="list-item list-item_open" data-parent>';
@@ -28,7 +29,10 @@ function createList($id) {
             $name = $row["catalogName"];
 
             createFolder($name);
-            createList($catalogID);
+            if (($key = array_search($row, $all)) !== false) {
+                unset($all[$key]);
+            }
+            createList($catalogID, $all);
         }
         echo "</div></div>";
     }
@@ -42,6 +46,16 @@ function createFolder($foldername) {
         <span>$foldername</span>
     </div>
     EOT;
+}
+
+function findChildren($parentID, $all) {
+    $result = [];
+    foreach ($all as $row) {
+        if (intval($row["parentID"]) == $parentID) {
+            array_push($result, $row);
+        }
+    }
+    return $result;
 }
 
 ?>
