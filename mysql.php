@@ -16,7 +16,8 @@ function doSQLQuery($query) {
 
     if ($result -> num_rows > 0) {
         while ($row = $result -> fetch_assoc()) {
-            yield $row;
+            yield $row; // можно было и без yield-а, но мне так проще было :) да и интересно было посмотреть, как ленивые итерации в php работают
+            // без yield-а просто создать массив $rows = []; и заполнять его в этом же цикле, а затем вернуть return $rows;
         }
     }
     else {
