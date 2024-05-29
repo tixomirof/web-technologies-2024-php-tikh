@@ -1,10 +1,12 @@
 <?php
     function buildGallery($path) {
+        transformToMiniatures($path);
         echo '<div class=\'gallery\'>';
         $files = array_diff(scandir($path), array('..', '.'));
+        $miniature_path = './gallery-miniatures/';
         foreach ($files as $file) {
             echo "<a href=\"$path$file\" target=\"_blank\">";
-            echo "<img class=\"gallery-image\" src=\"$path$file\"/>";
+            echo "<img class=\"gallery-image\" src=\"$miniature_path$file\"/>";
             echo "</a>";
         }
         echo '</div>';
@@ -44,6 +46,23 @@
         }
         if (!$file_created) {
             file_put_contents($path . 'log' . $counter . '.txt', $text);
+        }
+    }
+
+    function transformToMiniatures($image_path) {
+        $images = array_diff(scandir($image_path), array('..', '.'));
+        foreach ($images as $img) {
+            transformToMiniature($image_path, $img);
+        }
+    }
+
+    function transformToMiniature($image_folder_path, $image_path) {
+        $img = $image_path;
+        $miniature_path = './gallery-miniatures/';
+        if (!file_exists($miniature_path . $img)) {
+            $smaller_img = imagecreatefrompng($image_folder_path . $img);
+            $smaller_img_scale = imagescale($smaller_img, 300);
+            imagepng($smaller_img_scale, $miniature_path . $img);
         }
     }
 ?>

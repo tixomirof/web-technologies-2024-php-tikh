@@ -1,5 +1,6 @@
 <?php
 if (array_key_exists('uploadPhoto', $_FILES)) {
+    include './functions.php';
     $target_dir = "./gallery-images/";
     $target_file = $target_dir . basename($_FILES["uploadPhoto"]["name"]);
     $uploadOk = 1;
@@ -34,6 +35,7 @@ if (array_key_exists('uploadPhoto', $_FILES)) {
     if ($uploadOk) {
         if (move_uploaded_file($_FILES["uploadPhoto"]["tmp_name"], $target_file)) {
         echo "The file ". htmlspecialchars( basename( $_FILES["uploadPhoto"]["name"])). " has been uploaded.";
+        transformToMiniature($target_dir, $_FILES["uploadPhoto"]["name"]);
         header("Refresh:0; url=index.php");
         } else {
         echo "Sorry, there was an error uploading your file.<br>";
